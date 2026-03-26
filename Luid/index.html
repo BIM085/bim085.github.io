@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Para Letícia 💙</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.texto {
+  max-width: 650px;
+  white-space: pre-line;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#start { background: #0a84ff; color: white; }
+#sim { background: #00c853; color: white; display: none; }
+#nao {
+  background: #ff1744;
+  color: white;
+  position: absolute;
+  display: none;
+}
+
+/* mensagem final gigante */
+#final {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  display: none;
+  text-align: center;
+  animation: aparecer 1s ease forwards;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* corações caindo */
+.heart {
+  position: absolute;
+  color: red;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); }
+  100% { transform: translateY(110vh); }
+}
+
+/* explosão */
+.explosion {
+  position: absolute;
+  color: pink;
+  font-size: 20px;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <button id="start" onclick="iniciar()">Clique aqui 💙</button>
+  <div class="texto" id="texto"></div>
+
+  <div>
+    <button id="sim" onclick="aceitou()">SIM 💙</button>
+    <button id="nao" onmouseover="fugir()">NÃO 😈</button>
+  </div>
+
+  <iframe id="musica" width="0" height="0" src="" allow="autoplay"></iframe>
+</div>
+
+<div id="final">💙 AGORA VOCÊ É MINHA NAMORADA 💙</div>
+
+<script>
+const mensagem = `Letícia, eu queria te falar uma coisa que vem crescendo aqui dentro desde quando a gente se conheceu na escola.
+No meio de tanta gente, foi você que me chamou atenção… mas não foi pelo seu corpo, foi pelo seu jeito.
+Pelo jeito que você me tratava, pelo carinho nas palavras, pela forma simples e verdadeira de ser.
+
+Seus olhos… são tão lindos que às vezes eu me perco só olhando pra você.
+E seu cabelo, então… é só mais um detalhe que mostra o quanto você é incrível.
+
+Com o tempo, eu percebi que não era só uma paixão qualquer. Era algo real, algo que eu quero cuidar, respeitar e fazer crescer.
+Eu gosto de você de verdade, do jeito mais sincero que alguém pode gostar.
+
+E eu quero fazer isso do jeito certo, com respeito. Por isso, eu também quero pedir, de coração, a permissão do seu pai pra poder estar ao seu lado,
+te valorizar e te fazer feliz como você merece.
+
+Então… sendo direto e com o coração aberto:
+
+Letícia Lourenço Esmerino, você aceita namorar comigo? 💙`;
+
+let i = 0;
+
+function iniciar() {
+  document.getElementById("start").style.display = "none";
+
+  document.getElementById("musica").src =
+    "https://www.youtube.com/embed/0J8s7sXxF9Y?autoplay=1";
+
+  escrever();
+}
+
+function escrever() {
+  if (i < mensagem.length) {
+    document.getElementById("texto").innerHTML += mensagem.charAt(i);
+    i++;
+    setTimeout(escrever, 30);
+  } else {
+    document.getElementById("sim").style.display = "inline-block";
+    document.getElementById("nao").style.display = "inline-block";
+  }
+}
+
+function aceitou() {
+  document.getElementById("final").style.display = "block";
+
+  // explosão de corações
+  for (let i = 0; i < 50; i++) {
+    const e = document.createElement("div");
+    e.classList.add("explosion");
+    e.innerHTML = "💖";
+    e.style.left = "50%";
+    e.style.top = "50%";
+    e.style.setProperty("--x", (Math.random()*400-200)+"px");
+    e.style.setProperty("--y", (Math.random()*400-200)+"px");
+    document.body.appendChild(e);
+
+    setTimeout(() => e.remove(), 1000);
+  }
+}
+// botão NÃO foge
+function fugir() {
+  const btn = document.getElementById("nao");
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+}
+
+// corações caindo
+function criarCoracao() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 5000);
+}
+
+setInterval(criarCoracao, 300);
+</script>
+
+</body>
+</html>
